@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- DEFINICIÓN DE FUENTES (Rutas Absolutas /fonts/) --- */
+
+@font-face {
+  font-family: 'Rodchenko';
+  src: url('./fonts/Rodchenko-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rodchenko';
+  src: url('./fonts/Rodchenko-Regular.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'RodchenkoCond';
+  src: url('./fonts/RodchenkoCond-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --c-red: #D92B2B;
+  --c-black: #050505;
+  --c-cream: #F2EFE9;
+  --c-white: #FFFFFF;
+}
+
+body {
+  font-family: 'Rodchenko', system-ui, sans-serif !important;
+  background-color: var(--c-cream);
+  color: var(--c-black);
+  overflow: hidden;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 12px; background: var(--c-black); }
+::-webkit-scrollbar-track { background: var(--c-black); }
+::-webkit-scrollbar-thumb { background: var(--c-red); border: 2px solid var(--c-black); }
+::-webkit-scrollbar-thumb:hover { background: var(--c-white); }
+
+/* Utilities */
+.clip-diagonal-r { clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%); }
+.clip-diagonal-l { clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%); }
+
+.bg-pattern-dots {
+  background-image: radial-gradient(var(--c-red) 1px, transparent 1px);
+  background-size: 10px 10px;
+  opacity: 0.15;
+}
+
+.shadow-hard { box-shadow: 8px 8px 0px 0px var(--c-black); }
+.shadow-hard-sm { box-shadow: 4px 4px 0px 0px var(--c-black); }

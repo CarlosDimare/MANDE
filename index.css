@@ -4,26 +4,7 @@
 
 /* --- DEFINICIÓN DE FUENTES (Rutas Absolutas /fonts/) --- */
 
-@font-face {
-  font-family: 'Rodchenko';
-  src: url('/MANDE/fonts/Rodchenko-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Rodchenko';
-  src: url('/MANDE/fonts/Rodchenko-Regular.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'RodchenkoCond';
-  src: url('/MANDE/fonts/RodchenkoCond-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
+/* Fallback fonts - local fonts removed due to format issues */
 
 :root {
   --c-red: #D92B2B;
@@ -33,7 +14,7 @@
 }
 
 body {
-  font-family: 'Rodchenko', system-ui, sans-serif !important;
+  font-family: 'Arial Black', 'Helvetica Neue', sans-serif !important;
   background-color: var(--c-cream);
   color: var(--c-black);
   overflow: hidden;

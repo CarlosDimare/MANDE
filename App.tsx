@@ -22,6 +22,7 @@ function App() {
   const [showNewsSelector, setShowNewsSelector] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false); // Default closed on mobile
   const [attachment, setAttachment] = useState<{data: string, mimeType: string} | null>(null);
+  const [isLoading, setIsLoading] = useState(false); // Prevent multiple API calls
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -91,8 +92,13 @@ function App() {
   };
 
   const handleSend = async (overrideText?: string, isHidden: boolean = false) => {
+    // Prevent multiple simultaneous API calls
+    if (isLoading) return;
+    
     const textToSend = overrideText || input;
     if ((!textToSend.trim() && !attachment) || statusMessage) return;
+    
+    setIsLoading(true);
 
     const currentTimestamp = Date.now();
     let currentSessionId = sessionId;
@@ -237,6 +243,8 @@ function App() {
     } catch (error: any) {
       setMessages(prev => [...prev, { id: Date.now().toString(), role: 'model', text: `ERROR DE BUROCRACIA INTERNA: ${error.message}`, timestamp: Date.now() }]);
       setStatusMessage(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -441,8 +449,8 @@ function App() {
                   
                   <button 
                     onClick={() => handleSend()}
-                    disabled={statusMessage !== null || (!input.trim() && !attachment)}
-                    className={`px-6 md:px-10 font-head font-bold text-xl md:text-2xl uppercase tracking-wider transition-all border-l-4 border-black shrink-0 ${statusMessage || (!input.trim() && !attachment) ? 'bg-gray-300 text-gray-500' : 'bg-[#D92B2B] text-white hover:bg-black hover:text-[#D92B2B]'}`}
+                    disabled={isLoading || statusMessage !== null || (!input.trim() && !attachment)}
+                    className={`px-6 md:px-10 font-head font-bold text-xl md:text-2xl uppercase tracking-wider transition-all border-l-4 border-black shrink-0 ${isLoading || statusMessage || (!input.trim() && !attachment) ? 'bg-gray-300 text-gray-500' : 'bg-[#D92B2B] text-white hover:bg-black hover:text-[#D92B2B]'}`}
                   >
                     <span className="block transform skew-x-2">
                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6 md:hidden">

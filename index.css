@@ -6,21 +6,21 @@
 
 @font-face {
   font-family: 'Rodchenko';
-  src: url('./fonts/Rodchenko-Regular.ttf') format('truetype');
+  src: url('/MANDE/fonts/Rodchenko-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Rodchenko';
-  src: url('./fonts/Rodchenko-Regular.ttf') format('truetype');
+  src: url('/MANDE/fonts/Rodchenko-Regular.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'RodchenkoCond';
-  src: url('./fonts/RodchenkoCond-Regular.ttf') format('truetype');
+  src: url('/MANDE/fonts/RodchenkoCond-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }

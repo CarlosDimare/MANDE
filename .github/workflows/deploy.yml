@@ -30,7 +30,7 @@ jobs:
 
       - name: Build with Vite
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          VITE_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: npm run build
 
       - name: Deploy to GitHub Pages

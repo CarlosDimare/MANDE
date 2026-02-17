@@ -4,6 +4,16 @@ import { GoogleGenAI, Modality } from '@google/genai';
 import { createPcmBlob, decodeAudioData } from '../services/audioUtils';
 import { ModelId } from '../types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getApiKey = (): string => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const apiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error('GEMINI_API_KEY not configured. Please set VITE_GEMINI_API_KEY in your environment.');
+  }
+  return apiKey;
+};
+
 interface Props {
   onClose: () => void;
   systemInstruction: string;
@@ -27,7 +37,7 @@ const LiveSession: React.FC<Props> = ({ onClose, systemInstruction }) => {
     const startSession = async () => {
       try {
         // Use environment API key exclusively
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const ai = new GoogleGenAI({ apiKey: getApiKey() });
         
         inputContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
         outputContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });

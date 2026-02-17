@@ -2,8 +2,20 @@
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { AppConfig, ModelId } from "../types";
 
+// Get API key from environment - must be set as VITE_GEMINI_API_KEY in .env or GitHub Secrets
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getApiKey = (): string => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const apiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY;
+  if (!apiKey) {
+    console.error('GEMINI_API_KEY not configured. Please set VITE_GEMINI_API_KEY in your environment.');
+    throw new Error('GEMINI_API_KEY not configured. Please set VITE_GEMINI_API_KEY in your environment.');
+  }
+  return apiKey;
+};
+
 // Helper to get client using the injected environment key
-const getClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
+const getClient = () => new GoogleGenAI({ apiKey: getApiKey() });
 
 // Helper for exponential backoff delay
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));

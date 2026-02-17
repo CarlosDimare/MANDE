@@ -1,0 +1,9 @@
+{
+  "name": "MANDE",
+  "description": "Asistente lutheriano",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

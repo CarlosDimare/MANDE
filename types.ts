@@ -8,14 +8,7 @@ export enum AppMode {
 }
 
 export enum ModelId {
-  PRO = 'gemini-3-pro-preview',
-  FLASH = 'gemini-3-flash-preview',
-  FLASH_LITE = 'gemini-2.5-flash-lite',
-  FLASH_2_5 = 'gemini-2.5-flash',
-  FLASH_1_5 = 'gemini-1.5-flash',
-  IMAGE_FLASH = 'gemini-2.5-flash-image',
-  TTS = 'gemini-2.5-flash-preview-tts',
-  LIVE = 'gemini-2.5-flash-native-audio-preview-12-2025'
+  FLASH_2_5 = 'gemini-2.5-flash'
 }
 
 export interface Message {

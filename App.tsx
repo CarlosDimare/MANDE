@@ -261,9 +261,22 @@ function App() {
   };
 
   const handleSelectNews = (news: { title: string, snippet: string, url: string, source: string }) => {
-    // Se envía el prompt como "oculto" (true) para que no ensucie el chat
-    const prompt = `[EXPEDIENTE DE PRENSA RECIBIDO]\n\nFUENTE: ${news.source}\nTITULAR: ${news.title}\nRESUMEN: ${news.snippet}\nENLACE: ${news.url}`;
-    handleSend(prompt, true);
+    // Agregar la noticia al chat como mensaje del usuario (CRUDO, sin análisis de Gemini)
+    const newsMsg: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      text: `[EXPEDIENTE DE PRENSA]\n\nFUENTE: ${news.source}\nTITULAR: ${news.title}\nRESUMEN: ${news.snippet}\nENLACE: ${news.url}`,
+      timestamp: Date.now()
+    };
+    setMessages(prev => [...prev, newsMsg]);
+    
+    // NO se llama a Gemini automáticamente - el usuario debe hacer clic en "Analizar" manualmente
+  };
+
+  const handleAnalyzeNews = (msg: Message) => {
+    // Analizar la noticia con Gemini cuando el usuario hace clic en el botón
+    const prompt = `Analiza y procesa la siguiente noticia:\n\n${msg.text}`;
+    handleSend(prompt, false);
   };
 
   return (
@@ -394,7 +407,13 @@ function App() {
 
          {/* MESSAGES */}
          <div className="flex-1 overflow-y-auto custom-scrollbar pt-16 md:pt-12 px-2 md:px-16 relative z-10">
-            {messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+            {messages.map((msg) => (
+               <ChatMessage 
+                 key={msg.id} 
+                 message={msg} 
+                 onAnalyze={msg.text?.includes('[EXPEDIENTE DE PRENSA]') ? () => handleAnalyzeNews(msg) : undefined}
+               />
+             ))}
             {statusMessage && (
                <div className="py-8 flex justify-center">
                  <div className="bg-black text-white px-8 py-3 font-head font-bold uppercase text-lg md:text-xl tracking-widest border-l-8 border-[#D92B2B] animate-pulse skew-x-[-10deg] shadow-hard text-center">

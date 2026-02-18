@@ -4,9 +4,10 @@ import MarkdownRenderer from './MarkdownRenderer';
 
 interface Props {
   message: Message;
+  onAnalyze?: () => void;
 }
 
-const ChatMessage: React.FC<Props> = ({ message }) => {
+const ChatMessage: React.FC<Props> = ({ message, onAnalyze }) => {
   // Si el mensaje está marcado como oculto (ej: prompt interno de noticias), no renderizar nada.
   if (message.hidden) return null;
 
@@ -60,6 +61,16 @@ const ChatMessage: React.FC<Props> = ({ message }) => {
                 <span className="inline-block w-2 h-5 bg-[#D92B2B] ml-1 animate-pulse align-middle"></span>
              )}
           </div>
+
+          {/* Botón ANALIZAR para noticias */}
+          {onAnalyze && message.text?.includes('[EXPEDIENTE DE PRENSA]') && !message.isLoading && (
+            <button 
+              onClick={onAnalyze}
+              className="mt-4 w-full bg-black text-white font-bold uppercase py-3 px-4 border-2 border-white hover:bg-[#D92B2B] transition-colors"
+            >
+              📡 ANALIZAR NOTICIA
+            </button>
+          )}
 
           {/* MAPS & GROUNDING WIDGET (Tactical Intel Card) */}
           {message.grounding?.maps && message.grounding.maps.length > 0 && (

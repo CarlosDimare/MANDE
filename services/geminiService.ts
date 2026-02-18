@@ -90,7 +90,7 @@ export const generateImage = async (prompt: string, config: AppConfig) => {
   const runGen = async (attempt = 0): Promise<any> => {
       try {
         return await ai.models.generateContent({
-            model: ModelId.FLASH_1_5, 
+            model: ModelId.FLASH_LITE, 
             contents: { parts: [{ text: prompt }] },
             config: {
               imageConfig: {
@@ -115,7 +115,7 @@ export const editImage = async (prompt: string, base64Image: string, mimeType: s
   const runEdit = async (attempt = 0): Promise<any> => {
       try {
         return await ai.models.generateContent({
-            model: ModelId.FLASH_1_5,
+            model: ModelId.FLASH_LITE,
             contents: {
               parts: [
                   { inlineData: { data: base64Image, mimeType: mimeType } },
@@ -187,7 +187,7 @@ export const generateSpeech = async (text: string) => {
   const runSpeech = async (attempt = 0): Promise<any> => {
     try {
       const response = await ai.models.generateContent({
-        model: ModelId.FLASH_1_5,
+        model: ModelId.FLASH_LITE,
         contents: [{ parts: [{ text }] }],
         config: {
           responseModalities: [Modality.AUDIO],

@@ -91,12 +91,7 @@ export const generateImage = async (prompt: string, config: AppConfig) => {
       try {
         return await ai.models.generateContent({
             model: ModelId.FLASH_2_5, 
-            contents: { parts: [{ text: prompt }] },
-            config: {
-              imageConfig: {
-                  aspectRatio: config.aspectRatio,
-              }
-            }
+            contents: { parts: [{ text: prompt }] }
         });
       } catch (e: any) {
          if ((e.status === 429 || e.code === 429) && attempt < 4) {

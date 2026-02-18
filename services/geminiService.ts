@@ -32,8 +32,8 @@ export const generateTextStream = async (
   const mapKeywords = /mapa|ubicaci|dónde|donde|llegar|calle|ruta|ir a|localiza/i;
   const needsMaps = mapKeywords.test(prompt);
 
-  // Seleccionamos gemini-3-flash-preview para tareas de texto básicas por su eficiencia
-  let modelName = ModelId.FLASH;
+  // Seleccionamos gemini-2.5-flash-lite como modelo principal por su eficiencia
+  let modelName = ModelId.FLASH_LITE;
 
   const tools: any[] = [];
   tools.push({ googleSearch: {} });
@@ -90,7 +90,7 @@ export const generateImage = async (prompt: string, config: AppConfig) => {
   const runGen = async (attempt = 0): Promise<any> => {
       try {
         return await ai.models.generateContent({
-            model: ModelId.IMAGE_FLASH, 
+            model: ModelId.FLASH_1_5, 
             contents: { parts: [{ text: prompt }] },
             config: {
               imageConfig: {
@@ -115,7 +115,7 @@ export const editImage = async (prompt: string, base64Image: string, mimeType: s
   const runEdit = async (attempt = 0): Promise<any> => {
       try {
         return await ai.models.generateContent({
-            model: ModelId.IMAGE_FLASH,
+            model: ModelId.FLASH_1_5,
             contents: {
               parts: [
                   { inlineData: { data: base64Image, mimeType: mimeType } },
@@ -157,7 +157,7 @@ export const fetchNewsFeed = async (source: string) => {
   const runFetch = async (attempt = 0): Promise<any> => {
     try {
       const response = await ai.models.generateContent({
-        model: ModelId.FLASH, // Use Flash for agentic search tasks
+        model: ModelId.FLASH_LITE, // Use Flash Lite for agentic search tasks
         contents: { parts: [{ text: prompt }] },
         config: {
           tools: [{ googleSearch: {} }],
@@ -187,7 +187,7 @@ export const generateSpeech = async (text: string) => {
   const runSpeech = async (attempt = 0): Promise<any> => {
     try {
       const response = await ai.models.generateContent({
-        model: ModelId.TTS,
+        model: ModelId.FLASH_1_5,
         contents: [{ parts: [{ text }] }],
         config: {
           responseModalities: [Modality.AUDIO],

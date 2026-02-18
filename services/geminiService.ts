@@ -84,24 +84,29 @@ export const generateTextStream = async (
   return runChat();
 };
 
-// --- IMAGE GENERATION ---
+// --- IMAGE GENERATION (using Pollinations - free, no API key needed) ---
 export const generateImage = async (prompt: string, config: AppConfig) => {
-  const ai = getClient();
-  const runGen = async (attempt = 0): Promise<any> => {
-      try {
-        return await ai.models.generateContent({
-            model: ModelId.FLASH_2_5, 
-            contents: { parts: [{ text: prompt }] }
-        });
-      } catch (e: any) {
-         if ((e.status === 429 || e.code === 429) && attempt < 4) {
-            await delay(2000 * Math.pow(2, attempt));
-            return runGen(attempt + 1);
-         }
-         throw e;
+  // Pollinations API - free image generation
+  const width = 1024;
+  const height = 1024;
+  const seed = Math.floor(Math.random() * 1000000);
+  
+  // Build Pollinations URL (correct API endpoint)
+  const encodedPrompt = encodeURIComponent(prompt);
+  const imageUrl = `https://text.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&nologo=true&private=false`;
+  
+  // Return mock response compatible with App.tsx expectations
+  // The image URL will be used directly in the UI
+  return {
+    candidates: [{
+      content: {
+        parts: [
+          { text: "PRODUCCIÓN VISUAL FINALIZADA." },
+          { inlineData: { data: imageUrl, mimeType: "image/url" } }
+        ]
       }
+    }]
   };
-  return runGen();
 };
 
 // --- IMAGE EDITING ---

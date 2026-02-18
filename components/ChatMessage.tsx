@@ -43,9 +43,13 @@ const ChatMessage: React.FC<Props> = ({ message, onAnalyze }) => {
               {message.images.map((img, i) => (
                 <div key={i} className="relative p-2 bg-black transform -rotate-1">
                     <img 
-                      src={`data:image/png;base64,${img}`} 
+                      src={img.startsWith('http') ? img : `data:image/png;base64,${img}`} 
                       alt="Evidencia Visual" 
                       className="max-w-full border-2 border-white grayscale contrast-125"
+                      onError={(e) => {
+                        // Fallback if image fails to load
+                        (e.target as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGR5PSIuM2VtIiBmaWxsPSIjYWFhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+SW1hZ2Ugbm8gZGlzcG9uaWJsZTwvdGV4dD48L3N2Zz4=';
+                      }}
                     />
                     <div className="absolute top-0 left-0 bg-[#D92B2B] text-white text-[10px] font-bold px-2 py-1">FIG. {i+1}</div>
                 </div>
